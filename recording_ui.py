@@ -36,10 +36,16 @@ class TkView:
 		self.label.pack()
 		self.list = tk.Listbox(self.frame)
 		self.list.pack(fill=tk.BOTH, expand=1)
-		self.start_recording_button = tk.Button(self.frame, text="Start Recording", command=controller.start_recording)
+		self.frame_buttons = tk.Frame(self.frame)
+		self.frame_buttons.pack(fill=tk.BOTH, expand=1)
+		self.start_recording_button = tk.Button(self.frame_buttons, text="Start Recording", command=controller.start_recording)
 		self.start_recording_button.pack()
-		self.end_recording_button= tk.Button(self.frame, text="Start Recording", command=controller.end_recording)
+		self.end_recording_button = tk.Button(self.frame_buttons, text="End Recording", command=controller.end_recording)
 		self.end_recording_button.pack()
+		self.play_recording_button = tk.Button(self.frame_buttons, text="Play Recording", command=controller.end_recording)
+		self.play_recording_button.pack()
+		self.delete_recording_button = tk.Button(self.frame_buttons, text="Delete Recording", command=controller.end_recording)
+		self.delete_recording_button.pack()
 
 	def append_to_list(self, item):
 		self.list.insert(tk.END, item)
