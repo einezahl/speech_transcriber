@@ -1,0 +1,10 @@
+paths:
+  recording_folder: ./recordings/
+  
+
+rec_params:
+    chunk: 1024
+    sample_format: 8
+    channels: 1
+    fs: 44100
+    seconds: 3
