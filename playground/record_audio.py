@@ -64,7 +64,6 @@ class RecordAudio:
         waveFile.close()
 
 async def main(conf: RecordingConfig):
-    print("TEST")
     record = RecordAudio(conf)
     loop = asyncio.get_event_loop()
     loop.create_task(record.start_recording())
