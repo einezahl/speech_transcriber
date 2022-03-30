@@ -18,7 +18,7 @@ class RecordAudio:
         self.channel = conf.rec_params.channels
         self.rate = conf.rec_params.fs
         self.chunk = conf.rec_params.chunk
-        self.seconds = conf.rec_params.seconds
+        self.duration = conf.rec_params.duration
 
     async def start_recording(self):
         self.stream = self.audio.open(
@@ -32,7 +32,7 @@ class RecordAudio:
         self.frames = []
         self.rec = True
 
-        for _ in range(0, int(self.rate / self.chunk * self.seconds)):
+        for _ in range(0, int(self.rate / self.chunk * self.duration)):
             data = self.stream.read(self.chunk)
             self.frames.append(data)
 

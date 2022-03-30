@@ -6,7 +6,7 @@ class RecParams:
 	sample_format: int
 	channels: int
 	fs: int
-	seconds: int
+	duration: int
 
 @dataclass
 class Paths:
