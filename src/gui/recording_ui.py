@@ -1,8 +1,6 @@
 import tkinter as tk
 import uuid
 
-def start_recording():
-	pass
 
 class Model:
 	recordings = []
