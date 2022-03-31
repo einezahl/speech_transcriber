@@ -7,4 +7,4 @@ rec_params:
     sample_format: 8
     channels: 1
     fs: 44100
-    duration: 15
+    duration: 3
