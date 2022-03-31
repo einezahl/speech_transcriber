@@ -5,6 +5,7 @@ import os
 import pyaudio
 import time
 import wave
+import src.audio.convert_audio
 
 from src.config import RecordingConfig
 
@@ -52,7 +53,9 @@ class RecordAudio:
     # @hydra.main(config_path="../src/conf/", config_name="conf")
     def save_recording(self):
         filename = "output.wav"
+        filename_mp3 = "output.mp3"
         filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder, filename)
+        filepath_mp3 = os.path.join(get_original_cwd(), self.conf.paths.recording_folder, filename_mp3)
 
         waveFile = wave.open(filepath, 'wb')
         waveFile.setnchannels(self.conf.rec_params.channels)
@@ -60,6 +63,11 @@ class RecordAudio:
         waveFile.setframerate(self.conf.rec_params.fs)
         waveFile.writeframes(b''.join(self.frames))
         waveFile.close()
+
+        # src.audio.convert_audio.convert_audio(filepath, filepath_mp3)
+
+
+
 
 
 @hydra.main(config_path="../src/conf/", config_name="conf")

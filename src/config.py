@@ -11,6 +11,7 @@ class RecParams:
 @dataclass
 class Paths:
 	recording_folder: str
+	transcript_folder: str
 
 @dataclass
 class RecordingConfig:
