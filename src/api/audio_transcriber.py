@@ -5,6 +5,7 @@ import time
 import hydra
 from hydra.core.config_store import ConfigStore
 from hydra.utils import get_original_cwd
+from pydub import AudioSegment
 
 from src.config import RecordingConfig
 
@@ -24,6 +25,11 @@ class AudioTranscriber:
     self.auth_key = conf.trans_params.auth_key
     self.headers = {"authorization": self.auth_key, "content-type": "application/json"}
     self.conf = conf
+
+  def prepare_data(self, filename):
+      filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder,  filename)
+      sound = AudioSegment.from_file(f"{filepath}.wav", format="wav")
+      sound.export(f"{filepath}.mp3", format="mp3")
 
   async def __get_audio_url(self, filename):
     filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder,  f'{filename}.mp3')
@@ -52,18 +58,24 @@ class AudioTranscriber:
         f.write(polling_response.json()['text'])
       print('Transcript saved to', filepath)
 
+  def clean_up(self, filename):
+    filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder,  f'{filename}.mp3')
+    os.remove(filepath)
+
   async def __run(self, filename):
     await self.__get_audio_url(filename)
     await self.__send_request()
     await self.__get_transcript(filename)
 
   def run(self, filename):
+    self.prepare_data(filename)
     asyncio.run(self.__run(filename))
+    self.clean_up(filename)
 
 @hydra.main(config_path="../conf/", config_name="conf")
 def run(conf: RecordingConfig):
   transcriber = AudioTranscriber(conf)
-  transcriber.run('output')
+  transcriber.run('1648766442')
 
 
 if __name__ == "__main__":
