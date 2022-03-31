@@ -45,4 +45,10 @@ but the problem then is, that the function isn't idle and continues to run.
 The future is therefore never resolved. The solution might be to either use
 a thread, a callback or subroutine.  
 
-Copilot says we should use a callback in that case
+Copilot says we should use a callback in that case  
+And Copilot was right
+
+# Alternative to Hydra
+Hydra might not be the optimal package for the problem at hand.
+I think it is better suited for a purely data science oriented problem
+setting. An alternative might be pyenv
