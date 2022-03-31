@@ -1,6 +1,6 @@
 paths:
   recording_folder: ./recordings/
-  transcript_folder: ./transcriptions/
+  transcript_folder: ./transcripts/
 
 rec_params:
   chunk: 1024
