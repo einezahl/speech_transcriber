@@ -11,8 +11,7 @@ from src.config import RecordingConfig
 cs = ConfigStore.instance()
 cs.store(name="recording_config", node=RecordingConfig)
 
-class RecordAudio:
-    # @hydra.main(config_path="../src/conf/", config_name="conf")
+class AudioRecorder:
     def __init__(self, conf: RecordingConfig):
         self.conf = conf
         self.audio = pyaudio.PyAudio()
@@ -35,10 +34,6 @@ class RecordAudio:
         self.frames = []
         self.stream.start_stream()
 
-        # for _ in range(0, int(self.rate / self.chunk * self.duration)):
-        #     data = self.stream.read(self.chunk)
-        #     self.frames.append(data)
-
     def callback(self, in_data, frame_count, time_info, status):
         self.frames.append(in_data)
         return (in_data, pyaudio.paContinue)
@@ -47,11 +42,9 @@ class RecordAudio:
         self.stream.stop_stream()
         self.stream.close()
         print("* done recording")
-        self.audio.terminate()
     
-    # @hydra.main(config_path="../src/conf/", config_name="conf")
-    def save_recording(self):
-        filename = "output.wav"
+    def save_recording(self, filename):
+        filename = f"{filename}.wav"
         filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder, filename)
 
         waveFile = wave.open(filepath, 'wb')
@@ -61,10 +54,13 @@ class RecordAudio:
         waveFile.writeframes(b''.join(self.frames))
         waveFile.close()
 
+    def terminate(self):
+        self.audio.terminate()
+
 
 @hydra.main(config_path="../src/conf/", config_name="conf")
 def main(conf: RecordingConfig):
-    record = RecordAudio(conf)
+    record = AudioRecorder(conf)
     record.start_recording()
 
     time.sleep(record.duration)
