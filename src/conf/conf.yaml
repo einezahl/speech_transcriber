@@ -1,5 +1,6 @@
 paths:
   recording_folder: ./recordings/
+  transcript_folder: ./transcripts/
 
 rec_params:
   chunk: 1024
@@ -7,3 +8,6 @@ rec_params:
   channels: 1
   fs: 44100
   duration: 3
+
+trans_params:
+  auth_key: '9c4204d8e38f4e698ec518edaa7e5018'

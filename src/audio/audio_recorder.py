@@ -5,6 +5,7 @@ import os
 import pyaudio
 import time
 import wave
+import src.audio.convert_audio
 
 from src.config import RecordingConfig
 
@@ -46,6 +47,7 @@ class AudioRecorder:
     def save_recording(self, filename):
         filename = f"{filename}.wav"
         filepath = os.path.join(get_original_cwd(), self.conf.paths.recording_folder, filename)
+        filepath_mp3 = os.path.join(get_original_cwd(), self.conf.paths.recording_folder, filename_mp3)
 
         waveFile = wave.open(filepath, 'wb')
         waveFile.setnchannels(self.conf.rec_params.channels)
