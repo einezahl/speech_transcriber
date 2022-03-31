@@ -4,7 +4,7 @@ import numpy as np
 
 samplerate, data = wavfile.read('./recordings/output.wav')
 
-pool_size = 500
+pool_size = 100
 data = data[:data.shape[0]//pool_size*pool_size]
 data = data.reshape((-1, pool_size))
 data_mean = np.mean(data, axis=1)

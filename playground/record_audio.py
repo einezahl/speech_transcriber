@@ -34,10 +34,6 @@ class RecordAudio:
         self.frames = []
         self.stream.start_stream()
 
-        # for _ in range(0, int(self.rate / self.chunk * self.duration)):
-        #     data = self.stream.read(self.chunk)
-        #     self.frames.append(data)
-
     def callback(self, in_data, frame_count, time_info, status):
         self.frames.append(in_data)
         return (in_data, pyaudio.paContinue)
