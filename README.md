@@ -4,7 +4,7 @@ This tool is a training project, aimed to improve the usage
 of design principles, the development of guis, the usage of 
 integrated hardware, and transcription through an API.  
 
-As a first iteration tkinter was chose for the GUI implementation.
+As a first iteration tkinter was chosen for the GUI implementation.
 Assembly AIs API was chosen for the transcription.
 
 # Installation
@@ -34,7 +34,7 @@ The remaining dependencies can be installed using the requirements file
 
 # Configuration
 The configuration can be performed insinde the conf.yaml under src/conf/. The 
-most important step is to replace the API key with your own. It can be found
+most important step is to **replace the API key with your own**. It can be found
 on the AssemblyAI website under your dashboard.
 
 ## PYTHONPATH
