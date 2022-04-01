@@ -1,4 +1,4 @@
-# "Hello. My name is Tom and I like to quote." - Tom
+# "Hello. My name is Tom and I like to ~~quote~~ code!" - Tom
 
 This tool is a training project, aimed to improve the usage
 of design principles, the development of guis, the usage of 
