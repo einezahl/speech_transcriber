@@ -1,7 +1,5 @@
 /venv/
 /outputs/
-/recordings/**
-/transcripts/**
 **/__pycache__/
 .DS_Store
 notes.md
