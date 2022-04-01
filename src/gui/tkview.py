@@ -20,6 +20,10 @@ class TkView:
 		self.delete_recording_button.pack()
 		self.play_recording_button = tk.Button(self.frame_buttons, text="Play Recording", command=controller.play_recording)
 		self.play_recording_button.pack()
+		self.transcribed_button = tk.Button(self.frame_buttons, text="Transcribe Recording", command=controller.transcribe_recording)
+		self.transcribed_button.pack()
+		self.transcript_text = tk.Text(self.frame_buttons)
+		self.transcript_text.pack()
 
 	def append_to_list(self, item):
 		self.list.insert(tk.END, item)

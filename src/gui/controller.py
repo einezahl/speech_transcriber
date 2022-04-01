@@ -1,17 +1,20 @@
-import imp
+import tkinter as tk
 from hydra.utils import get_original_cwd
 import os
 import time
 
 
 class Controller:
-	def __init__(self, recorder, player, model, view, conf) -> None:
+	def __init__(self, recorder, player, transcriber, model, view, conf) -> None:
 		self.recorder = recorder
 		self.player = player
+		self.transcriber = transcriber
 		self.model = model
 		self.view = view
 		self.conf = conf
 		self.recordings_folder = os.path.join(get_original_cwd(), conf.paths.recording_folder)
+		self.transcript_folder = os.path.join(get_original_cwd(), conf.paths.transcript_folder)
+
 
 	def start(self):
 		self.view.setup(self)
@@ -55,3 +58,13 @@ class Controller:
 				filepath = os.path.join(self.recordings_folder, filename)
 				filepath = filepath + ".wav"
 				self.player.start_playing(filepath)
+
+	def transcribe_recording(self):
+		self.view.transcript_text.delete(1.0, tk.END)
+		selected_recordings = self.view.list.curselection()
+		if len(selected_recordings) > 0:
+			for recording in selected_recordings:
+				filename = self.model.recordings[recording]
+				self.transcriber.run(filename)
+				with open(os.path.join(self.transcript_folder, filename + ".txt"), "r") as f:
+					self.view.transcript_text.insert(tk.END, f.read())
