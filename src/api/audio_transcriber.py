@@ -7,10 +7,10 @@ from hydra.core.config_store import ConfigStore
 from hydra.utils import get_original_cwd
 from pydub import AudioSegment
 
-from src.config import RecordingConfig
+from src.config import Config
 
 cs = ConfigStore.instance()
-cs.store(name="recording_config", node=RecordingConfig)
+cs.store(name="config", node=Config)
 
 def read_file(filename):
    with open(filename, 'rb') as _file:
@@ -21,7 +21,7 @@ def read_file(filename):
            yield data
 
 class AudioTranscriber:
-  def __init__(self, conf: RecordingConfig):
+  def __init__(self, conf: Config):
     self.auth_key = conf.trans_params.auth_key
     self.headers = {"authorization": self.auth_key, "content-type": "application/json"}
     self.conf = conf
@@ -73,7 +73,7 @@ class AudioTranscriber:
     self.clean_up(filename)
 
 @hydra.main(config_path="../conf/", config_name="conf")
-def run(conf: RecordingConfig):
+def run(conf: Config):
   transcriber = AudioTranscriber(conf)
   transcriber.run('1648766442')
 

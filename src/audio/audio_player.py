@@ -6,13 +6,13 @@ import os
 import pyaudio
 import wave
 
-from src.config import RecordingConfig
+from src.config import Config
 
 cs = ConfigStore.instance()
-cs.store(name="recording_config", node=RecordingConfig)
+cs.store(name="config", node=Config)
 
 class AudioPlayer:
-	def __init__(self, conf: RecordingConfig):
+	def __init__(self, conf: Config):
 		self.audio = pyaudio.PyAudio()
 		self.chunk = conf.rec_params.chunk
 
@@ -43,7 +43,7 @@ class AudioPlayer:
 
 
 @hydra.main(config_path="../conf/", config_name="conf")
-def main(conf: RecordingConfig):
+def main(conf: Config):
 	record = AudioPlayer(conf)
 	record.start_playing(os.path.join(get_original_cwd(), './recordings/1648754506.wav'))
 	record.terminate()

@@ -7,7 +7,6 @@ rec_params:
   sample_format: 8
   channels: 1
   fs: 44100
-  duration: 3
 
 trans_params:
-  auth_key: '9c4204d8e38f4e698ec518edaa7e5018'
+  auth_key: 'INSERT_YOUR_API_KEY_HERE'

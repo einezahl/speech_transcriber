@@ -6,7 +6,6 @@ class RecParams:
 	sample_format: int
 	channels: int
 	fs: int
-	duration: int
 
 @dataclass
 class Paths:
@@ -18,7 +17,7 @@ class TranscriptConfig:
 	auth_key: str
 
 @dataclass
-class RecordingConfig:
+class Config:
 	paths: Paths
 	rec_params: RecParams
 	trans_params: TranscriptConfig

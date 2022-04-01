@@ -1,19 +1,19 @@
 import hydra
 from hydra.core.config_store import ConfigStore
 
-from src.config import RecordingConfig
+from src.config import Config
 
 cs = ConfigStore.instance()
-cs.store(name="recording_config", node=RecordingConfig)
+cs.store(name="config", node=Config)
 
 
 class HydraClassTest:
-	def __init__(self, conf: RecordingConfig):
+	def __init__(self, conf: Config):
 		print(conf)
 
 
 @hydra.main(config_path="../src/conf/", config_name="conf")
-def main(conf: RecordingConfig):
+def main(conf: Config):
 	HydraClassTest(conf)
 
 if __name__ == "__main__":

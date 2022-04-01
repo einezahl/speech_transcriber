@@ -5,20 +5,19 @@ import os
 import pyaudio
 import wave
 
-from src.config import RecordingConfig
+from src.config import Config
 
 cs = ConfigStore.instance()
-cs.store(name="recording_config", node=RecordingConfig)
+cs.store(name="config", node=Config)
 
 class PlayAudio:
-	def __init__(self, conf: RecordingConfig):
+	def __init__(self, conf: Config):
 		self.conf = conf
 		self.audio = pyaudio.PyAudio()
 		self.sample_format = conf.rec_params.sample_format
 		self.channel = conf.rec_params.channels
 		self.rate = conf.rec_params.fs
 		self.chunk = conf.rec_params.chunk
-		self.duration = conf.rec_params.duration
 
 	def start_playing(self, filename: str):
 		wf = wave.open(filename, 'rb')
@@ -43,7 +42,7 @@ class PlayAudio:
 
 
 @hydra.main(config_path="../src/conf/", config_name="conf")
-def main(conf: RecordingConfig):
+def main(conf: Config):
 	record = PlayAudio(conf)
 	record.start_playing(os.path.join(get_original_cwd(), './recordings/1648754506.wav'))
 	record.terminate()

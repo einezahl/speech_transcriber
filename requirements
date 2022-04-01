@@ -3,3 +3,4 @@ scipy
 matplotlib
 tkinter
 hydra-core
+requests
