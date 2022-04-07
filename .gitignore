@@ -1,6 +1,7 @@
 /venv/
 /outputs/
 **/__pycache__/
+/src/api/key.txt
 .DS_Store
 notes.md
 user_story.md

@@ -2,18 +2,15 @@ import tkinter as tk
 import hydra
 from hydra.core.config_store import ConfigStore
 from hydra.utils import get_original_cwd
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
 import os
-import sys
 
 from src.api.audio_transcriber import AudioTranscriber
 from src.audio.audio_recorder import AudioRecorder
 from src.audio.audio_player import AudioPlayer
 from src.config import Config
 from src.gui.model import Model
-from src.gui.ui_controller import UiController
-from src.gui.main_window import MainWindow
+from src.gui.controller import Controller
+from src.gui.tkview import TkView
 
 cs = ConfigStore.instance()
 cs.store(name="config", node=Config)
@@ -28,19 +25,17 @@ def main(conf: Config):
         os.makedirs(os.path.join(get_original_cwd(),
                     conf.paths.transcript_folder))
 
-    app = QApplication(sys.argv)
-    window = MainWindow()
     model = Model()
+    view = TkView()
     audio_recorder = AudioRecorder(conf)
     audio_player = AudioPlayer(conf)
     audio_transcriber = AudioTranscriber(conf)
 
-    controller = UiController(audio_recorder, audio_player,
-                              audio_transcriber, model, window, conf)
+    controller = Controller(audio_recorder, audio_player,
+                            audio_transcriber, model, view, conf)
     controller.start()
     audio_recorder.terminate()
     audio_player.terminate()
-    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
