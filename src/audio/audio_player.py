@@ -34,6 +34,11 @@ class AudioPlayer:
         print("* done playing")
         self.stream.stop_stream()
 
+    def play_recording(self, filename: str):
+        self.start_playing(filename)
+        self.stop_playing()
+        self.terminate()
+
     def callback(self, in_data, frame_count, time_info, status):
         data = self.wf.readframes(self.chunk)
         return (data, pyaudio.paContinue)

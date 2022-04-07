@@ -37,9 +37,10 @@ def main(conf: Config):
 
     controller = UiController(audio_recorder, audio_player,
                               audio_transcriber, model, window, conf)
+
     controller.start()
-    audio_recorder.terminate()
-    audio_player.terminate()
+    # audio_recorder.terminate(app.exec_())
+    # audio_player.terminate(app.exec_())
     sys.exit(app.exec_())
 
 

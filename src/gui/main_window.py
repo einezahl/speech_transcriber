@@ -9,47 +9,24 @@
 
 
 from PyQt5.QtCore import Qt, QRect, QMetaObject, QCoreApplication
-from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QListWidget, QTextBrowser, QMenuBar, QStatusBar, QMenu, QAction
+from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QListWidget, QTextBrowser, QMenuBar, QStatusBar, QMenu, QAction
 
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.initializeUI()
+        self.__initializeUI()
 
-    def initializeUI(self):
+    def __initializeUI(self):
         self.setObjectName("MainWindow")
         self.resize(771, 386)
+        self.__setupMenuAndStatusbar()
+        self.__setupWidgetsAndLayout()
+        self.__retranslateUI()
+        QMetaObject.connectSlotsByName(self)
 
-        self.centralwidget = QWidget()
-        self.centralwidget.setObjectName("centralwidget")
-
-        self.listWidget = QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QRect(40, 40, 291, 231))
-        self.listWidget.setObjectName("listView")
-
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QRect(40, 280, 91, 31))
-        self.pushButton.setObjectName("pushButton")
-
-        self.pushButton_2 = QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QRect(140, 280, 91, 31))
-        self.pushButton_2.setObjectName("pushButton_2")
-
-        self.pushButton_3 = QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QRect(240, 280, 91, 31))
-        self.pushButton_3.setObjectName("pushButton_3")
-
-        self.pushButton_4 = QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QRect(360, 130, 81, 31))
-        self.pushButton_4.setObjectName("pushButton_4")
-
-        self.textBrowser = QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QRect(470, 80, 231, 131))
-        self.textBrowser.setObjectName("textBrowser")
-
-        self.setCentralWidget(self.centralwidget)
+    def __setupMenuAndStatusbar(self):
         self.menubar = QMenuBar()
         self.menubar.setGeometry(QRect(0, 0, 771, 21))
         self.menubar.setObjectName("menubar")
@@ -68,17 +45,53 @@ class MainWindow(QMainWindow):
         self.menuSpeech_Transcriber.addAction(self.actionFile)
         self.menubar.addAction(self.menuSpeech_Transcriber.menuAction())
 
-        self.retranslateUI()
-        QMetaObject.connectSlotsByName(self)
+    def __setupWidgetsAndLayout(self):
+        self.centralwidget = QWidget()
+        self.centralwidget.setObjectName("centralwidget")
+        self.setCentralWidget(self.centralwidget)
 
-    def retranslateUI(self):
+        self.listWidget = QListWidget(self.centralwidget)
+        self.listWidget.setGeometry(QRect(40, 40, 291, 231))
+        self.listWidget.setObjectName("listView")
+
+        self.start_stop_recording_button = QPushButton(self.centralwidget)
+        self.start_stop_recording_button.setGeometry(QRect(40, 280, 91, 31))
+        self.start_stop_recording_button.setObjectName(
+            "start_stop_recording_button")
+
+        self.play_recording_button = QPushButton(self.centralwidget)
+        self.play_recording_button.setGeometry(
+            QRect(140, 280, 91, 31))
+        self.play_recording_button.setObjectName(
+            "play_recording_recording_button")
+
+        self.delete_recording_button = QPushButton(self.centralwidget)
+        self.delete_recording_button.setGeometry(QRect(240, 280, 91, 31))
+        self.delete_recording_button.setObjectName("delete_recording_button")
+
+        self.transcribe_recording_button = QPushButton(self.centralwidget)
+        self.transcribe_recording_button.setGeometry(QRect(360, 130, 81, 31))
+        self.transcribe_recording_button.setObjectName("transcribe_button")
+
+        self.textBrowser = QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QRect(470, 80, 231, 131))
+        self.textBrowser.setObjectName("textBrowser")
+
+    def __retranslateUI(self):
+        # TODO: just put it into setuplayout function maybe
+        """
+        This method got generated automatically by PyQt5 designer. Ugly AF.
+        """
         _translate = QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "Record"))
-        self.pushButton_2.setText(_translate("MainWindow", "Play"))
-        self.pushButton_2.clicked.connect(self.playAudio)
-        self.pushButton_3.setText(_translate("MainWindow", "Delete"))
-        self.pushButton_4.setText(_translate("MainWindow", "Transcribe"))
+        self.start_stop_recording_button.setText(
+            _translate("MainWindow", "Record"))
+        self.play_recording_button.setText(
+            _translate("MainWindow", "Play"))
+        self.delete_recording_button.setText(
+            _translate("MainWindow", "Delete"))
+        self.transcribe_recording_button.setText(
+            _translate("MainWindow", "Transcribe"))
         self.menuSpeech_Transcriber.setTitle(_translate("MainWindow", "File"))
         self.actionFile.setText(_translate("MainWindow", "Import API Key"))
 
@@ -87,6 +100,9 @@ class MainWindow(QMainWindow):
 
     def append_to_list(self, recording):
         self.listWidget.addItem(recording)
+
+    def remove_from_list(self, recording):
+        self.listWidget.takeItem(self.listWidget.row(recording))
 
     # def keyPressEvent(self, event):
     #     if event.key() == Qt.Key_Escape:
