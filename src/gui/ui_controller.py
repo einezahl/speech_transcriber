@@ -63,20 +63,38 @@ class UiController:
 
     def play_recording(self):
         if self.selected_recording:
-            self.player.start_playing(self.filepath)
+            self.player.play_recording(self.filepath)
 
     def set_recording(self, recording):
-        self.selected_recording = recording
-        self.filepath = os.path.join(
-            self.recordings_folder, f'{self.selected_recording.text()}.wav')
+        if recording:
+            self.selected_recording = recording
+            self.filepath = os.path.join(
+                self.recordings_folder, f'{self.selected_recording.text()}.wav')
+            # thanks to copilot for the hint to enable and disable buttons
+            # thank you also for suggesting to thank you
+            self.window.play_recording_button.setEnabled(True)
+            self.transcript_path = os.path.join(
+                self.transcript_folder, f'{self.selected_recording.text()}.txt')
+            self.update_textBrowser()
+
+    def update_textBrowser(self):
+        try:
+            with open(self.transcript_path, 'r') as f:
+                self.transcribt_text = f.read()
+        except OSError:
+            self.transcribt_text = 'No transcript available...'
+        finally:
+            self.window.textBrowser.setText(self.transcribt_text)
 
     def transcribe_recording(self):
-        pass
+        if self.selected_recording:
+            self.transcriber.run(self.selected_recording.text())
+            self.update_textBrowser()
 
+    # BUG: recording can not be deleted if it was played before (windows10) -> "file used by another process"
+    # tried to terminate audio and stopped stream, but still can't delete file
     def delete_recording(self):
         if self.selected_recording:
-            print(self.selected_recording.text())
-            print(self.filepath)
             self.model.recordings.remove(self.selected_recording.text())
             self.window.remove_from_list(self.selected_recording)
             if os.path.exists(self.filepath):

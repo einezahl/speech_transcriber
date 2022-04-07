@@ -17,6 +17,15 @@ class AudioPlayer:
         self.audio = pyaudio.PyAudio()
         self.chunk = conf.rec_params.chunk
 
+    # dont need stop_playing?
+    # TODO: change button to manually stop playing
+    def play_recording(self, filename: str):
+        self.start_playing(filename)
+        while self.stream.is_active():
+            time.sleep(0.1)
+        self.stop_playing()
+        self.terminate()
+
     def start_playing(self, filename: str):
         self.wf = wave.open(filename, 'rb')
         self.stream = self.audio.open(
@@ -33,11 +42,6 @@ class AudioPlayer:
     def stop_playing(self):
         print("* done playing")
         self.stream.stop_stream()
-
-    def play_recording(self, filename: str):
-        self.start_playing(filename)
-        self.stop_playing()
-        self.terminate()
 
     def callback(self, in_data, frame_count, time_info, status):
         data = self.wf.readframes(self.chunk)

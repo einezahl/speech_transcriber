@@ -40,7 +40,7 @@ def main(conf: Config):
 
     controller.start()
     # audio_recorder.terminate(app.exec_())
-    # audio_player.terminate(app.exec_())
+    # audio_player.terminate()
     sys.exit(app.exec_())
 
 

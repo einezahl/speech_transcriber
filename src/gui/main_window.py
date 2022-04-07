@@ -60,6 +60,7 @@ class MainWindow(QMainWindow):
             "start_stop_recording_button")
 
         self.play_recording_button = QPushButton(self.centralwidget)
+        self.play_recording_button.setEnabled(False)
         self.play_recording_button.setGeometry(
             QRect(140, 280, 91, 31))
         self.play_recording_button.setObjectName(
