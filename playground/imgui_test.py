@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from enum import Enum, auto
+
 import glfw
 import OpenGL.GL as gl
 
@@ -6,81 +8,106 @@ import imgui
 from imgui.integrations.glfw import GlfwRenderer
 from testwindow import show_test_window
 
+
+class RecordingEnum(Enum):
+    STARTED = auto()
+    STOPPED = auto()
+
+
+widgets_basic_listbox_item_current = 1
+recording_state = RecordingEnum.STOPPED
+
+
 def main():
-	imgui.create_context()
-	window = impl_glfw_init()
-	impl = GlfwRenderer(window)
+    global widgets_basic_listbox_item_current
+    global recording_state
+    imgui.create_context()
+    window = impl_glfw_init()
+    impl = GlfwRenderer(window)
 
-	while not glfw.window_should_close(window):
-		glfw.poll_events()
-		impl.process_inputs()
+    while not glfw.window_should_close(window):
+        glfw.poll_events()
+        impl.process_inputs()
 
-		imgui.new_frame()
+        imgui.new_frame()
 
-		if imgui.begin_main_menu_bar():
-			if imgui.begin_menu("File", True):
+        if imgui.begin_main_menu_bar():
+            if imgui.begin_menu("File", True):
 
-				clicked_quit, selected_quit = imgui.menu_item(
-					"Quit", 'Cmd+Q', False, True
-				)
+                clicked_quit, selected_quit = imgui.menu_item(
+                    "Quit", 'Cmd+Q', False, True
+                )
 
-				if clicked_quit:
-					exit(1)
+                if clicked_quit:
+                    exit(1)
 
-				imgui.end_menu()
-			imgui.end_main_menu_bar()
+                imgui.end_menu()
+            imgui.end_main_menu_bar()
 
+        imgui.begin("Custom window", True)
+        changed, widgets_basic_listbox_item_current = imgui.listbox(
+            label='',
+            current=widgets_basic_listbox_item_current,
+            items=["Hello", "World", "What", "is", "up", "dude?"],
+            height_in_items=4,
+        )
+        if recording_state == RecordingEnum.STOPPED:
+            if imgui.button("Start Recording", width=imgui.get_window_width()):
+                print("Start Recording")
+                recording_state = RecordingEnum.STARTED
+        else:
+            if imgui.button("Stop Recording", width=imgui.get_window_width()):
+                print("Stop Recording")
+                recording_state = RecordingEnum.STOPPED
+        imgui.button(label="Delete Recording", width=imgui.get_window_width())
+        imgui.button(label="Play Recording", width=imgui.get_window_width())
+        imgui.button(label="Transcribe Recording",
+                     width=imgui.get_window_width())
+        imgui.text("Your transcription should be here")
+        imgui.end()
 
-		imgui.begin("Custom window", True)
-		imgui.button(label="Test")
-		imgui.text("Bar")
-		imgui.text_ansi("B\033[31marA\033[mnsi ")
-		imgui.text_ansi_colored("Eg\033[31mgAn\033[msi ", 0.2, 1., 0.)
-		imgui.extra.text_ansi_colored("Eggs", 0.2, 1., 0.)
-		imgui.end()
+        show_test_window()
+        # imgui.show_test_window()
 
-		show_test_window()
-		#imgui.show_test_window()
+        gl.glClearColor(1., 1., 1., 1)
+        gl.glClear(gl.GL_COLOR_BUFFER_BIT)
 
-		gl.glClearColor(1., 1., 1., 1)
-		gl.glClear(gl.GL_COLOR_BUFFER_BIT)
+        imgui.render()
+        impl.render(imgui.get_draw_data())
+        glfw.swap_buffers(window)
 
-		imgui.render()
-		impl.render(imgui.get_draw_data())
-		glfw.swap_buffers(window)
-
-	impl.shutdown()
-	glfw.terminate()
+    impl.shutdown()
+    glfw.terminate()
 
 
 def impl_glfw_init():
-	width, height = 1280, 720
-	window_name = "minimal ImGui/GLFW3 example"
+    width, height = 1280, 720
+    window_name = "minimal ImGui/GLFW3 example"
 
-	if not glfw.init():
-		print("Could not initialize OpenGL context")
-		exit(1)
+    if not glfw.init():
+        print("Could not initialize OpenGL context")
+        exit(1)
 
-	# OS X supports only forward-compatible core profiles from 3.2
-	glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-	glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
-	glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+    # OS X supports only forward-compatible core profiles from 3.2
+    glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
+    glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
 
-	glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
+    glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
 
-	# Create a windowed mode window and its OpenGL context
-	window = glfw.create_window(
-		int(width), int(height), window_name, None, None
-	)
-	glfw.make_context_current(window)
+    # Create a windowed mode window and its OpenGL context
+    window = glfw.create_window(
+        int(width), int(height), window_name, None, None
+    )
+    glfw.make_context_current(window)
 
-	if not window:
-		glfw.terminate()
-		print("Could not initialize Window")
-		exit(1)
+    if not window:
+        glfw.terminate()
+        print("Could not initialize Window")
+        exit(1)
 
-	return window
+    return window
 
 
 if __name__ == "__main__":
-	main()
+    main()

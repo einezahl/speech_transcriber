@@ -2,7 +2,7 @@ from scipy.io import wavfile
 import matplotlib.pyplot as plt
 import numpy as np
 
-samplerate, data = wavfile.read('./recordings/output.wav')
+samplerate, data = wavfile.read('./recordings/code_vs_quote.wav')
 
 pool_size = 100
 data = data[:data.shape[0]//pool_size*pool_size]
