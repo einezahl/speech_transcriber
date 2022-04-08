@@ -228,7 +228,8 @@ borders_v_borders = True
 
 collapsing_headers_closable_group = True
 
-filtering_filter = None # Todo - bind this in cimgui.pxd
+filtering_filter = None  # Todo - bind this in cimgui.pxd
+
 
 def show_help_marker(desc):
 
@@ -272,7 +273,8 @@ def show_example_menu_file():
     global example_menu_file_options_n
     global example_menu_file_options_b
 
-    imgui.menu_item(label="(dummy menu)", shortcut=None, selected=False, enabled=False)
+    imgui.menu_item(label="(dummy menu)", shortcut=None,
+                    selected=False, enabled=False)
     if imgui.menu_item("New"):
         pass
     if imgui.menu_item(label="Open", shortcut="Ctrl+O"):
@@ -736,7 +738,8 @@ def show_test_window():
             show_help_marker(
                 "Enable resizing of windows from their edges and from the lower-left corner.\nThis requires (io.BackendFlags & ImGuiBackendFlags_HasMouseCursors) because it needs mouse cursor feedback."
             )
-            imgui.checkbox(label="io.MouseDrawCursor", state=io.mouse_draw_cursor)
+            imgui.checkbox(label="io.MouseDrawCursor",
+                           state=io.mouse_draw_cursor)
             imgui.same_line()
             show_help_marker(
                 "Instruct Dear ImGui to render a mouse cursor for you. Note that a mouse cursor rendered via your application GPU rendering path will feel more laggy than hardware cursor, but will be more in sync with your other visuals.\n\nSome desktop applications may use both kinds of cursors (e.g. enable software cursor only when resizing/dragging something)."
@@ -799,12 +802,14 @@ def show_test_window():
             clicked, no_menu = imgui.checkbox(label="No menu", state=no_menu)
             clicked, no_move = imgui.checkbox(label="No move", state=no_move)
             imgui.same_line(150)
-            clicked, no_resize = imgui.checkbox(label="No resize", state=no_resize)
+            clicked, no_resize = imgui.checkbox(
+                label="No resize", state=no_resize)
             imgui.same_line(300)
             clicked, no_collapse = imgui.checkbox(
                 label="No collapse", state=no_collapse
             )
-            clicked, no_close = imgui.checkbox(label="No close", state=no_close)
+            clicked, no_close = imgui.checkbox(
+                label="No close", state=no_close)
             imgui.same_line(150)
             clicked, no_nav = imgui.checkbox(label="No nav", state=no_nav)
 
@@ -901,7 +906,8 @@ def show_test_window():
                 "ESCAPE to revert.\n\nPROGRAMMER:\nYou can use the ImGuiInputTextFlags_CallbackResize facility if you need to wire InputText() to a dynamic string type. See misc/stl/imgui_stl.h for an example (this is not demonstrated in imgui_demo.cpp)."
             )
 
-            changed, widgets_basic_i0 = imgui.input_int("input int", widgets_basic_i0)
+            changed, widgets_basic_i0 = imgui.input_int(
+                "input int", widgets_basic_i0)
             imgui.same_line()
             show_help_marker(
                 "You can apply arithmetic operators +,*,/ on numerical values.\n  e.g. [ 100 ], input '*2', result becomes [ 200 ]\nUse +- to subtract.\n"
@@ -931,7 +937,8 @@ def show_test_window():
                 "input float4", *widgets_basic_vec4a
             )
 
-            changed, widgets_basic_i1 = imgui.drag_int("drag int", widgets_basic_i1, 1)
+            changed, widgets_basic_i1 = imgui.drag_int(
+                "drag int", widgets_basic_i1, 1)
             imgui.same_line()
             show_help_marker(
                 "Click and drag to edit value.\nHold SHIFT/ALT for faster/slower edit.\nDouble-click or CTRL+click to input value."
@@ -1092,7 +1099,8 @@ def show_test_window():
 
         if imgui.tree_node("Bullets"):
             imgui.bullet_text("Bullet point 1")
-            imgui.bullet_text("Bullet point 2" + os.linesep + "newOn multiple lines")
+            imgui.bullet_text("Bullet point 2" +
+                              os.linesep + "newOn multiple lines")
             imgui.bullet()
             imgui.text("Bullet point 3 (two calls)")
             imgui.bullet()
@@ -1106,7 +1114,8 @@ def show_test_window():
                 imgui.text_colored(text="Yellow", r=1.0, g=1.0, b=0.0, a=1.0)
                 imgui.text_disabled("Disabled")
                 imgui.same_line()
-                show_help_marker("The TextDisabled color is stored in ImGuiStyle.")
+                show_help_marker(
+                    "The TextDisabled color is stored in ImGuiStyle.")
                 imgui.tree_pop()
 
             if imgui.tree_node("Word Wrapping"):
@@ -1391,7 +1400,8 @@ def show_test_window():
 
             if imgui.tree_node("Selection State: Multiple Selection"):
 
-                show_help_marker("Hold CTRL and click to select multiple items.")
+                show_help_marker(
+                    "Hold CTRL and click to select multiple items.")
 
                 for n in range(5):
 
@@ -1697,8 +1707,8 @@ def show_test_window():
 
             misc_flags = (
                 (imgui.COLOR_EDIT_HDR
-                if color_picker_hdr
-                else 0)
+                 if color_picker_hdr
+                 else 0)
                 | (0 if color_picker_drag_and_drop else imgui.COLOR_EDIT_NO_DRAG_DROP)
                 | (
                     imgui.COLOR_EDIT_ALPHA_PREVIEW_HALF
@@ -1725,10 +1735,12 @@ def show_test_window():
             )
 
             imgui.text("Color widget HSV with Alpha:")
-            changed, color_picker_color = imgui.color_edit4("MyColor##2", *color_picker_color, imgui.COLOR_EDIT_HSV  | misc_flags)
+            changed, color_picker_color = imgui.color_edit4(
+                "MyColor##2", *color_picker_color, imgui.COLOR_EDIT_HSV | misc_flags)
 
-            imgui.text("Color widget with Float Display:");
-            changed, color_picker_color = imgui.color_edit4("MyColor##2f", *color_picker_color, imgui.COLOR_EDIT_FLOAT | misc_flags)
+            imgui.text("Color widget with Float Display:")
+            changed, color_picker_color = imgui.color_edit4(
+                "MyColor##2f", *color_picker_color, imgui.COLOR_EDIT_FLOAT | misc_flags)
 
             # imgui.text("Color button with Picker:");
             # imgui.same_line();
@@ -2884,7 +2896,8 @@ def show_test_window():
                 imgui.open_popup("select")
             imgui.same_line()
             imgui.text_unformatted(
-                "<None>" if popups_selected_fish == -1 else names[popups_selected_fish]
+                "<None>" if popups_selected_fish == -
+                1 else names[popups_selected_fish]
             )
             if imgui.begin_popup("select"):
                 imgui.text("Aquarium")
@@ -2941,7 +2954,8 @@ def show_test_window():
             # // For more advanced uses you may want to replicate and cuztomize this code. This the comments inside BeginPopupContextItem() implementation.
 
             imgui.text(
-                "Value = " + str(context_menus_value) + " (<-- right-click here)"
+                "Value = " + str(context_menus_value) +
+                " (<-- right-click here)"
             )
             if imgui.begin_popup_context_item("item context menu"):
                 changed, _ = imgui.selectable("Set to zero")
@@ -3195,7 +3209,8 @@ def show_test_window():
                 if borders_h_borders and imgui.get_column_index() == 0:
                     imgui.separator()
                 imgui.text(
-                    char_add_to_a(i) + " " + char_add_to_a(i) + " " + char_add_to_a(i)
+                    char_add_to_a(i) + " " + char_add_to_a(i) +
+                    " " + char_add_to_a(i)
                 )
                 imgui.text(
                     "Width "
@@ -3278,7 +3293,8 @@ def show_test_window():
         imgui.text("WantCaptureKeyboard: " + str(io.want_capture_keyboard))
         imgui.text("WantTextInput: " + str(io.want_text_input))
         imgui.text("WantSetMousePos: " + str(io.want_set_mouse_pos))
-        imgui.text("NavActive: " + str(io.nav_active) +  "NavVisible: " + str(io.nav_visible))
+        imgui.text("NavActive: " + str(io.nav_active) +
+                   "NavVisible: " + str(io.nav_visible))
 
         #     if imgui.tree_node("Keyboard, Mouse & Navigation State"):
         #     {
