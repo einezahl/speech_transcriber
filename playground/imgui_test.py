@@ -16,11 +16,13 @@ class RecordingEnum(Enum):
 
 widgets_basic_listbox_item_current = 1
 recording_state = RecordingEnum.STOPPED
+widget_api_key = "Insert your API key here"
 
 
 def main():
     global widgets_basic_listbox_item_current
     global recording_state
+    global widget_api_key
     imgui.create_context()
     window = impl_glfw_init()
     impl = GlfwRenderer(window)
@@ -45,6 +47,8 @@ def main():
             imgui.end_main_menu_bar()
 
         imgui.begin("Custom window", True)
+        imgui.push_item_width(imgui.get_window_width())
+
         changed, widgets_basic_listbox_item_current = imgui.listbox(
             label='',
             current=widgets_basic_listbox_item_current,
@@ -61,6 +65,11 @@ def main():
                 recording_state = RecordingEnum.STOPPED
         imgui.button(label="Delete Recording", width=imgui.get_window_width())
         imgui.button(label="Play Recording", width=imgui.get_window_width())
+        changed, widget_api_key = imgui.input_text(
+            label="Insert your API key here",
+            value=widget_api_key,
+            buffer_length=400
+        )
         imgui.button(label="Transcribe Recording",
                      width=imgui.get_window_width())
         imgui.text("Your transcription should be here")
